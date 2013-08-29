@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+<style>
+    tr td{height: 75px;}
+</style>
+
+<script type="text/javascript" src="jquery-1.9.1.min.js">
+</script>
+</script>
+<script type="application/javascript">
+var val="";
+$(function(){
+   $('#register input:text').click(function(){
+	  $(this).css('color', 'black');
+	  $(this).val("");
+    });
+ $("#submit").click(function(){
+$("#register").find(".textbox").each(function(){
+
+val=val+'&'+$(this).attr('id')+'='+$(this).val();
+
+});
+//alert(val);
+ validation();
+//var result = val.slice( 1 );
+
+ 
+
+
+});
+});
+
+</script>
+<script type="text/javascript">
+    function validation()
+    {
+      var e=0;
+      $('#register input:text,input:password').each(function(){
+	var value=$(this).val();
+	if (value==''||value=='please fill up this') {
+	  $(this).css('color','red');
+	  $(this).val("please fill up this");
+	  e=1;
+	 
+	}
+      });
+      var email=$("#email").val();
+	  //alert('--'+email+'--');
+	var mailformat =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			if (!email.match(mailformat)) {
+			alert('Please provide a valid email address');
+			$("#email").focus();
+			e=1;
+			return false;
+			}
+			var pwd=$("#pass").val();	
+			var rpwd=$("#cpass").val();
+			if(pwd!=rpwd)
+			{
+				alert("password must be same.");
+				e=1;
+				return false;
+			}
+			if(e==1)
+			{
+			alert("some fields are blank");
+			return false;
+			}
+			if (e!=1) {
+			   var yohoAPI = "http://50.56.237.229/demos/app/phpfiles/insert_newuser.php?jsoncallback=?"+val;
+			      $.getJSON( yohoAPI, {
+				tags: "mount rainier",
+				tagmode: "any",
+				format: "json"
+			      })
+			      .done(function( data ) {
+			       
+				 var statusval=data.items;
+				     if(statusval==1)
+				     {
+				   document.location.href="menu.htm";
+				     alert("Succesfully resistered.");
+				     }
+				     else
+				     {
+				      document.location.href="signup.htm";
+				      alert("Emailid allready exist.");
+				     }
+				     
+				$("#register").find(".textbox").each(function(){
+			    
+				    $(this).val('');
+			    
+				});
+			      });		
+			  
+			}
+    }
+	 
+			
+		function isNumberKey(evt)
+		  {
+		     var charCode = (evt.which) ? evt.which : event.keyCode
+		     if (charCode > 31 && (charCode < 48 || charCode > 57))
+			     {
+				    alert("please enter number");
+			return false;
+				    }
+			    else
+		     return true;
+		  }
+</script>
+</head>
+<body >
+    <h3>Mobile App</h3>
+    <div id="container" >
+       <table  style="width:96%; float: left; margin-left: 2%; margin-top: 6%;" id="register">
+            <tr>
+                <td><input type="text" name="" Placeholder="User Name " id="name" class="textbox" style="background: url(images/user.png) no-repeat #ffffff;background-size:4% 96%; background-position: left;" /></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="" Placeholder="Email" id="email" class="textbox" style="background: url(images/email.jpg) no-repeat #ffffff;background-size:4% 96%; background-position: left;" /></td>
+            </tr>
+             <tr>
+                <td><input type="password" name="" Placeholder="Password" id="pass" class="textbox" style="background: url(images/lock.png) no-repeat #ffffff;background-size:4% 96%; background-position: left;" /></td>
+            </tr>
+              <tr>
+                <td><input type="password" name="" Placeholder="Retype Password" id="cpass" class="textbox" style=" background: url(images/lock.png) no-repeat #ffffff;background-size:4% 96%; background-position: left;" /></td>
+            </tr>
+               <tr>
+                <td><input type="text" name="" Placeholder="Address" id="add" class="textbox" style=" background: url(images/address.png) no-repeat #ffffff; background-size:4% 96%; background-position: left;" /></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="" Placeholder="Phone no." id="phn" class="textbox" onkeypress="return isNumberKey(event)" style=" background: url(images/address.png) no-repeat #ffffff;background-size:4% 96%; background-position: left;" /></td>
+            </tr>
+            <tr>
+                <td>
+                   <img src="images/signupbutton.png" style="width:100%; height: auto;" id="submit" >
+                </td>
+            </tr>
+            
+       </table>
+    </div>
+</body>
+</html>

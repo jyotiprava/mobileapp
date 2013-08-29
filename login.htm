@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+<style>
+    tr td{height: 75px;}
+</style>
+<script type="text/javascript" src="jquery-1.9.1.min.js">
+</script>
+<script type="application/javascript">
+var val="";
+$(function(){
+$("#submit").click(function(){
+
+
+var email=$("#email").val();
+
+var pass=$("#pass").val();
+  var yohoAPI = "http://50.56.237.229/demos/app/phpfiles/login_insert.php?jsoncallback=?";
+  $.getJSON( yohoAPI, {
+    tags: "mount rainier",
+    email:email,
+    pass:pass,
+    tagmode: "any",
+    format: "json"
+  })
+  .done(function( data ) {
+  
+     var statusval=data.items;
+	 if(statusval==1)
+	 {
+	  localStorage.email=email;
+	 document.location.href="home.htm";
+	 }
+	 else
+	 {
+	  document.location.href="menu.htm";
+	 }
+	 
+    
+  });
+
+});
+});
+
+</script>
+
+</head>
+<body >
+    <h3>Mobile App</h3>
+    <div id="container" >
+       
+       <table id="login" style="width:96%; float: left; margin-left: 2%; margin-top: 6%; font-family: arial; font-size: 14px; color: #ffffff;">
+            <tr>
+                <td><input type="text" name="" placeholder="Emailid" id="email" style="width:94%; height: 35px; float: left; padding: 1%; padding-left: 5%;  border-radius:8px; -moz-border-radius:8px; background: url(images/user.png) no-repeat #ffffff; background-size:4% 96%; background-position: left;" /></td>
+            </tr>
+            <tr>
+                <td><input type="password" name="" placeholder="Password" id="pass" style="width:94%; height: 35px; padding: 1%; padding-left: 5%; background: #ffffff; border-radius:8px; -moz-border-radius:8px; background: url(images/lock.png) no-repeat #ffffff; background-size:4% 96%; background-position: left;" /><br/>
+               <br/> Forgot Your password?
+                </td>
+            </tr>
+           
+            <tr>
+                <td>
+                    <input type="button" id="submit" value="Login" class="button" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="test.htm"><img src="images/login1.png" style="width:49%; height: auto;float: left;"/></a>
+                    <img src="images/twitter1.png" style="width:49%; height: auto; float: left; margin-left: 2%;">    
+                </td>
+            </tr>
+       </table>
+
+    </div>
+</body>
+</html>
